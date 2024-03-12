@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import uniandes.dpoo.aerolinea.exceptions.InformacionInconsistenteException;
 import uniandes.dpoo.aerolinea.modelo.Aerolinea;
+import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
+import uniandes.dpoo.aerolinea.modelo.cliente.ClienteNatural;
 
 public class PersistenciaAerolineaJson implements IPersistenciaAerolinea{
 	
@@ -17,6 +19,20 @@ public class PersistenciaAerolineaJson implements IPersistenciaAerolinea{
     {
 		String jsonCompleto = new String( Files.readAllBytes( new File( archivo ).toPath( )));
         JSONObject raiz = new JSONObject( jsonCompleto );
+        
+        for (int i = 0; i < aerolinea.getVuelos().size(); i++) {
+            JSONObject vuelosObject = (JSONObject) aerolinea.getVuelos();
+            		}
+        
+        for (int i = 0; i < aerolinea.getAviones().size(); i++) {
+            JSONObject avionesObject = (JSONObject) aerolinea.getAviones();
+            		}
+        
+        for (int i = 0; i < aerolinea.getRutas().size(); i++) {
+            JSONObject rutasObject = (JSONObject) aerolinea.getRutas();
+            		}
+           
+        
     }
 
     @Override
@@ -25,10 +41,6 @@ public class PersistenciaAerolineaJson implements IPersistenciaAerolinea{
     	JSONObject jobject = new JSONObject( );
 
      
-        // Escribir la estructura JSON en un archivo
-        PrintWriter pw = new PrintWriter( archivo );
-        jobject.write( pw, 2, 0 );
-        pw.close( );
     }
 
 }
