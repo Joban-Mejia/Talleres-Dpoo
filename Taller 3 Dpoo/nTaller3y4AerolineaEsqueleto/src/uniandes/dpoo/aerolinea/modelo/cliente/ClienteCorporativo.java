@@ -16,28 +16,32 @@ public class ClienteCorporativo extends Cliente
 	
 	private String nombreEmpresa;
 	private int tamanoEmpresa;
+
 	
 	
 	 public ClienteCorporativo(String nombreEmpresa, int tamano) {
+		 super();
 	    	
 	    }
 	    
 	    public String getNombreEmpresa() {
-			return nombreEmpresa;
+			return this.nombreEmpresa;
 			    	
 	    }
 
 		public int getTamañoEmpresa() {
-			return tamanoEmpresa;
+			return this.tamanoEmpresa;
 		}
 	    
 	    public String getTipoCliente() {
-			return null;
+			return this.CORPORATIVO;
 	    	
 	    }
 	    
 	    public String getIdentificador() {
-			return null;
+	    	
+	    	
+			return this.nombreEmpresa;
 	    	
 	    }
 

@@ -48,6 +48,8 @@ public class GeneradorTiquetes
     public static void registrarTiquete( Tiquete unTiquete )
     {
         // TODO implementar
+    	
+    	
     }
 
     /**

@@ -10,7 +10,7 @@ public class Ruta
 	private String horaSalida;
 	private String horaLlegada;
 	private String codigoRuta;
-	private Aeropuerto destiono;
+	private Aeropuerto destino;
 	private Aeropuerto origen;
 	
 	public Ruta(Aeropuerto origen, Aeropuerto destino, String horaSalida, String horaLlegada, String codigoRuta) {
@@ -19,30 +19,60 @@ public class Ruta
 	
 	public String getCodigoRuta() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.codigoRuta;
 	}
 	
 	public Aeropuerto getOrigen() {
-		return null;
+		return this.origen;
 		
 	}
 	
 	public Aeropuerto getDestino() {
-		return null;
+		return this.destino;
 		
 	}
 	
 	public String getHoraSalida() {
-		return horaSalida;
+		return this.horaSalida;
 	}
 
 
 	public String getHoraLlegada() {
-		return horaLlegada;
+		return this.horaLlegada;
 	}
 	
 	public int getDuracion() {
-		return 0;
+		
+		
+		int minutosSalida = getMinutos(this.horaSalida);
+		int minutosLlegada = getMinutos(this.horaLlegada);
+		int horasLlegada = getHoras(this.horaLlegada);
+		int horasSalida = getHoras(this.horaSalida);
+	
+		// Convertir horas de llegada y salida a minutos
+		
+		// Caso de 11am - 14pm: Serian 3 horas de vuelo
+		// Caso 23pm - 1am: serian 2 horas de vuelo
+		
+		int minutosTotales = minutosLlegada - minutosSalida;
+		int horasTotales;
+		
+		if (horasLlegada >= horasSalida) {
+			 horasTotales = horasLlegada - horasSalida;
+		}
+		
+		else  {
+			
+			horasTotales = (horasLlegada + 24) - horasSalida;	
+			
+		}
+		
+		horasTotales = horasTotales * 60;
+		
+		
+		int duracion = horasTotales + minutosTotales;
+		
+		return duracion;	
 		
 	}
 

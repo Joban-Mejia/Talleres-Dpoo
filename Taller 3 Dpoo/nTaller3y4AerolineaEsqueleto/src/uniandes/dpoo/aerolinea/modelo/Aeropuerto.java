@@ -29,25 +29,25 @@ public class Aeropuerto
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public String getCodigo() {
-		return codigo;
+		return this.codigo;
 	}
 
 	public String getNombreCiudad() {
-		return nombreCiudad;
+		return this.nombreCiudad;
 	}
 
 	private double getLongitud() {
 		
-		return longitud;
+		return this.longitud;
 	}
 
 	private double getLatitud() {
 		
-		return latitud;
+		return this.latitud;
 	}
 
 

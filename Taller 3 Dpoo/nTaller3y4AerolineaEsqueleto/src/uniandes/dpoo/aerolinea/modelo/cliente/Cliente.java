@@ -5,25 +5,22 @@ import java.util.List;
 import uniandes.dpoo.aerolinea.modelo.Vuelo;
 import uniandes.dpoo.aerolinea.tiquetes.Tiquete;
 
-public abstract class Cliente {
+public abstract class Cliente extends java.lang.Object{
 	
 	
 	private List<Tiquete> tiquetesSinUsar;
 	private List<Tiquete> tiquetesUsados;
 	
+	
 	public Cliente() {
 		
 	}
 
-	public String getTipoCliente(){
-		return null;
-		
-	}
+	public abstract String getTipoCliente();
 	
-	public String getIdentificador() {
-		return null;
-		
-	}
+	
+	public abstract String getIdentificador();
+	
 	
 	public void agregarTiquete(Tiquete tiquete) {
 	}

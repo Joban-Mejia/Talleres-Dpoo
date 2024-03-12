@@ -1,36 +1,22 @@
 package uniandes.dpoo.aerolinea.modelo.tarifas;
 
+import uniandes.dpoo.aerolinea.modelo.Aeropuerto;
 import uniandes.dpoo.aerolinea.modelo.Ruta;
 
 import uniandes.dpoo.aerolinea.modelo.Vuelo;
 import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
 
 public abstract class CalculadoraTarifas {
-	public static double IMPUESTO = 0.28;
+	public static final double IMPUESTO = 0.28;
 	
 	
-	public int carcularTarifa(Vuelo vuelo, Cliente cliente) {
-		return 0;
-		
-	}
+	abstract public int carcularTarifa(Vuelo vuelo, Cliente cliente);
 	
-	protected int calcularCostoBase(Vuelo vuelo, Cliente cliente) {
-		return 0;
-		
-	}	
+	abstract protected  int calcularCostoBase(Vuelo vuelo, Cliente cliente);	
 	
-	protected double calcularPorcentajeDescuento(Cliente cliente) {
-		return 0;
-		
-	}
+	abstract protected double calcularPorcentajeDescuento(Cliente cliente);
 	
-	protected int calcularDistanciaVuelo(Ruta ruta) {
-		return 0;
-		
-	}
+	abstract protected int calcularDistanciaVuelo(Ruta ruta);
 	
-	protected int calcularValorImpuestos(int costoBase) {
-		return 0;
-		
-	}
+	abstract protected int calcularValorImpuestos(int costoBase);
 }

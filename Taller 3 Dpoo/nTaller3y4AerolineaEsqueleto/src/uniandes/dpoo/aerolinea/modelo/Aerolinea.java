@@ -12,6 +12,7 @@ import java.util.Map;
 import uniandes.dpoo.aerolinea.exceptions.InformacionInconsistenteException;
 import uniandes.dpoo.aerolinea.exceptions.VueloSobrevendidoException;
 import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
+import uniandes.dpoo.aerolinea.modelo.tarifas.CalculadoraTarifas;
 import uniandes.dpoo.aerolinea.persistencia.CentralPersistencia;
 import uniandes.dpoo.aerolinea.persistencia.IPersistenciaAerolinea;
 import uniandes.dpoo.aerolinea.persistencia.IPersistenciaTiquetes;
@@ -161,10 +162,17 @@ public class Aerolinea
      * @param fechaVuelo
      * @return Retorna el vuelo que coincide con los parámetros dados. Si no lo encuentra, retorna null.
      */
-    public Vuelo getVuelo( String codigoRuta, String fechaVuelo )
+   
+	public Vuelo getVuelo( String codigoRuta, String fechaVuelo )
     {
         // TODO implementar
-        return null;
+    	for (Vuelo vuelo : vuelos) {
+            if (vuelo.getRuta().getCodigoRuta().equals(codigoRuta) && vuelo.getFecha().equals(fechaVuelo)) {
+                return vuelo;
+            }
+
+        }
+		return null; 
     }
 
     /**
@@ -183,7 +191,14 @@ public class Aerolinea
     public Collection<Tiquete> getTiquetes( )
     {
         // TODO implementar
-        return null;
+    	List<Tiquete> listaTiquetes = null;
+    	
+    	for(Vuelo tiquetes: vuelos)
+    		tiquetes.getTiquetes().addAll(listaTiquetes);
+    	// Recorrer vuelo por vuelo y crear una estructura para guardar todos los tiquetes.
+    
+        return listaTiquetes;
+		
 
     }
 
@@ -204,6 +219,10 @@ public class Aerolinea
     public void cargarAerolinea( String archivo, String tipoArchivo ) throws TipoInvalidoException, IOException, InformacionInconsistenteException
     {
         // TODO implementar
+    	
+    	IPersistenciaAerolinea cargador = CentralPersistencia.getPersistenciaAerolinea( tipoArchivo );
+        cargador.cargarAerolinea( archivo, this );
+    	
     }
 
     /**
@@ -212,10 +231,14 @@ public class Aerolinea
      * @param tipoArchivo El tipo del archivo. Puede ser CentralPersistencia.JSON o CentralPersistencia.PLAIN.
      * @throws TipoInvalidoException Se lanza esta excepción si se indica un tipo de archivo inválido
      * @throws IOException Lanza esta excepción si hay problemas escribiendo en el archivo
+     * @throws InformacionInconsistenteException 
      */
-    public void salvarAerolinea( String archivo, String tipoArchivo ) throws TipoInvalidoException, IOException
+    public void salvarAerolinea( String archivo, String tipoArchivo ) throws TipoInvalidoException, IOException, InformacionInconsistenteException
     {
         // TODO implementar
+    	
+    	 IPersistenciaAerolinea cargador = CentralPersistencia.getPersistenciaAerolinea( tipoArchivo );
+         cargador.cargarAerolinea( archivo, this );
     }
 
     /**
@@ -263,9 +286,37 @@ public class Aerolinea
      * @param nombreAvion El nombre del avión que realizará el vuelo
      * @throws Exception Lanza esta excepción si hay algún problema con los datos suministrados
      */
+   
     public void programarVuelo( String fecha, String codigoRuta, String nombreAvion ) throws Exception
     {
         // TODO Implementar el método
+    	
+    	// avion
+    	// ruta
+    	// vuelo
+    
+    	//Inicializamos el avion
+    	Avion avion1 = null;
+    	//Obtenemos la ruta que se encuentra en el mapa de rutas
+    	Ruta ruta = rutas.get(codigoRuta);
+    	
+    	Vuelo vuelo1 = new Vuelo(null, null, null);
+    	
+    	// Recorremos la lista de aviones y si el nombre de un avion particular coincide con el nombre del parametro "nombreAvion"
+    	// asociamos este avion al avion inicializado
+    	
+    	for (Avion avion: aviones) {
+    		
+    		
+    		//if (avion.getNombre() == nombreAvion && (avion!= vuelo1.getAvion() && fecha!=vuelo1.getFecha()));
+    		if (avion.getNombre() == nombreAvion) {
+    			
+    			avion1 = avion;
+    		}
+    	}
+    	
+    	//Agregamos el vuelo a la Aerolinea
+    	Vuelo vuelo = new Vuelo(ruta, fecha, avion1);
     }
 
     /**
@@ -286,7 +337,37 @@ public class Aerolinea
     public int venderTiquetes( String identificadorCliente, String fecha, String codigoRuta, int cantidad ) throws VueloSobrevendidoException, Exception
     {
         // TODO Implementar el método
-        return -1;
+    	// Buscar el vuelo correspondiente
+        Vuelo vuelo = getVuelo(codigoRuta, fecha);
+        
+        
+        if (vuelo == null) {
+            throw new Exception("No se encontró el vuelo para la ruta y fecha especificada");
+        }
+        
+        Avion avion = vuelo.getAvion();
+
+        // Verificar si hay suficiente espacio en el avion
+        if ( avion.getCapacidad() < cantidad - vuelo.getTiquetes().size() ) {
+            throw new VueloSobrevendidoException(vuelo);
+        }
+
+        // Calcular el precio total de los tiquetes vendidos
+        int precioTotal = cantidad * 2;// los tiquetes vendidos;
+
+        // Vender los tiquetes asociados al cliente y vuelo
+        Cliente cliente = getCliente(identificadorCliente);
+        if (cliente == null) {
+            throw new Exception("No se encontró el cliente con el identificador especificado");
+        }
+        for (int i = 0; i < cantidad; i++) {
+            Tiquete tiquete = new Tiquete(codigoRuta, vuelo, cliente, precioTotal);
+            cliente.agregarTiquete(tiquete);
+            
+        }
+        // Devuelve el valor total de los tiquetes vendidos
+
+        return (int) precioTotal;     
     }
 
     /**
@@ -297,7 +378,9 @@ public class Aerolinea
     public void registrarVueloRealizado( String fecha, String codigoRuta )
     {
         // TODO Implementar el método
+    	
     }
+
 
     /**
      * Calcula cuánto valen los tiquetes que ya compró un cliente dado y que todavía no ha utilizado

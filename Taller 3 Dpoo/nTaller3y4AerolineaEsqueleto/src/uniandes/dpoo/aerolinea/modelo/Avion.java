@@ -12,11 +12,11 @@ public class Avion {
 
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 
 	public int getCapacidad() {
-		return capacidad;
+		return this.capacidad;
 	}
 }

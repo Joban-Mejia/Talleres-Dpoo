@@ -1,23 +1,28 @@
 package uniandes.dpoo.aerolinea.modelo.cliente;
 
+
+
 public class ClienteNatural extends Cliente{
 	
 	public static String NATURAL = "Natural";
 	private String nombre;
 	
 	
-	
-	public ClienteNatural(String nombre) {		
+	public ClienteNatural(String nombre) {	
+		
 	}
 	
+	
+	@Override
 	public String getIdentificador() {
-		return null;
+		return this.nombre;
 				
+		
 	}
 
-	
+	@Override
 	public String getTipoCliente() {
-		return null;
+		return ClienteNatural.NATURAL;
 		
 		
 	}

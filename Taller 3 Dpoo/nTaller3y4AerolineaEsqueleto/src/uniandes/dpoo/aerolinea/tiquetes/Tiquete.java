@@ -16,33 +16,43 @@ public class Tiquete {
 		
 	}
 	
+
+
 	public Cliente getCliente() {
-		return null;
+		
+		
+		return this.cliente;
 		
 	}
 
 	
 	public Vuelo getVuelo() {
-		return null;
+		return this.vuelo;
 		
 	}
 	
 	
 	public String getCodigo() {
-		return codigo;
+		return this.codigo;
 	}
 	
 	
 	public int getTarifa() {
-		return tarifa;
+		return this.tarifa;
 	}
 	
 	public void marcarComoUsado() {
 		
+		if (usado == false) {
+			
+			usado = true;
+			
+		}
+				
 	}
 	
 	public boolean esUsado() {
-		return false;
+		return this.usado;
 		
 	}
 	
